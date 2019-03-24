@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="S0S-As-98O">
+            <objects>
+                <windowController storyboardIdentifier="Duplicate Flow" id="Yhc-Ez-Fhh" sceneMemberID="viewController">
+                    <window key="window" title="Duplicate Flow" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Rr9-nQ-XfF">
+                        <windowStyleMask key="styleMask" titled="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="245" y="301" width="300" height="200"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <connections>
+                            <outlet property="delegate" destination="Yhc-Ez-Fhh" id="dnJ-1Z-zr3"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="wXj-Bx-AyY" kind="relationship" relationship="window.shadowedContentViewController" id="WMQ-ev-MPZ"/>
+                    </connections>
+                </windowController>
+                <customObject id="V3w-vE-CEa" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-132" y="79"/>
+        </scene>
+        <!--Duplicate Flow View Controller-->
+        <scene sceneID="mDF-fi-HuN">
+            <objects>
+                <viewController id="wXj-Bx-AyY" customClass="DuplicateFlowViewController" customModule="SwiftNNTrainer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="thO-gc-hxP">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="200"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Np9-Yn-smh">
+                                <rect key="frame" x="60" y="152" width="97" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Duplicate Flow:" id="hPH-aB-NcV">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wpx-uI-YBE">
+                                <rect key="frame" x="161" y="152" width="13" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="0" id="dyL-PI-LWa">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dJO-yO-tQO">
+                                <rect key="frame" x="60" y="116" width="63" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Into Flow:" id="lzD-Sd-xvV">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="104" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EJh-ky-YWP">
+                                <rect key="frame" x="20" y="20" width="260" height="21"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DKy-Fa-hQ4">
+                                        <rect key="frame" x="-6" y="-7" width="98" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Duplicate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="37Y-3v-QhS">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onDuplicate:" target="wXj-Bx-AyY" id="GRv-hY-eQS"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WR4-kB-dmF">
+                                        <rect key="frame" x="184" y="-7" width="82" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xfe-Wk-gTH">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onCancel:" target="wXj-Bx-AyY" id="cEj-f1-DSg"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="a9E-16-q4e">
+                                <rect key="frame" x="127" y="111" width="56" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="800" constant="51" id="B1o-vZ-Gxo"/>
+                                </constraints>
+                                <popUpButtonCell key="cell" type="push" title="0" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="5hG-6v-zKA" id="8HS-x8-N48">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="uLJ-Tw-alY">
+                                        <items>
+                                            <menuItem title="0" state="on" id="5hG-6v-zKA"/>
+                                            <menuItem title="1" id="t4i-X9-DVC"/>
+                                            <menuItem title="2" id="mEr-gp-g6I"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                            </popUpButton>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Np9-Yn-smh" firstAttribute="leading" secondItem="thO-gc-hxP" secondAttribute="leading" constant="62" id="0zk-a0-Ryg"/>
+                            <constraint firstItem="dJO-yO-tQO" firstAttribute="leading" secondItem="thO-gc-hxP" secondAttribute="leading" constant="62" id="DDR-hL-OCA"/>
+                            <constraint firstAttribute="trailing" secondItem="EJh-ky-YWP" secondAttribute="trailing" constant="20" id="IvP-xd-a9T"/>
+                            <constraint firstItem="EJh-ky-YWP" firstAttribute="leading" secondItem="thO-gc-hxP" secondAttribute="leading" constant="20" id="POG-mE-xsL"/>
+                            <constraint firstItem="a9E-16-q4e" firstAttribute="centerY" secondItem="dJO-yO-tQO" secondAttribute="centerY" id="UDS-2k-ECT"/>
+                            <constraint firstItem="dJO-yO-tQO" firstAttribute="top" secondItem="Np9-Yn-smh" secondAttribute="bottom" constant="19" id="bGA-pP-Z4y"/>
+                            <constraint firstAttribute="bottom" secondItem="EJh-ky-YWP" secondAttribute="bottom" constant="20" id="d6r-0G-09Z"/>
+                            <constraint firstItem="a9E-16-q4e" firstAttribute="leading" secondItem="dJO-yO-tQO" secondAttribute="trailing" constant="8" id="ec7-Ui-Iyv"/>
+                            <constraint firstItem="wpx-uI-YBE" firstAttribute="leading" secondItem="Np9-Yn-smh" secondAttribute="trailing" constant="8" id="kJZ-id-8YS"/>
+                            <constraint firstItem="wpx-uI-YBE" firstAttribute="centerY" secondItem="Np9-Yn-smh" secondAttribute="centerY" id="r6C-q3-ggg"/>
+                            <constraint firstItem="Np9-Yn-smh" firstAttribute="top" secondItem="thO-gc-hxP" secondAttribute="top" constant="31" id="wAK-Yw-ueT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="fromFlow" destination="wpx-uI-YBE" id="VDo-1N-jDl"/>
+                        <outlet property="toFlow" destination="a9E-16-q4e" id="JDA-xn-L2i"/>
+                    </connections>
+                </viewController>
+                <customObject id="E9g-js-Gv5" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="257" y="72"/>
+        </scene>
+    </scenes>
+</document>
