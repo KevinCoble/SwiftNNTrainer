@@ -44,6 +44,31 @@
 		0EBCB9752220F96500547393 /* PaddingExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBCB9742220F96500547393 /* PaddingExampleView.swift */; };
 		0EDEC64C2240728C007D7468 /* UpdateRule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EDEC64B2240728C007D7468 /* UpdateRule.storyboard */; };
 		0EDEC64E2240733C007D7468 /* UpdateRuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC64D2240733C007D7468 /* UpdateRuleViewController.swift */; };
+		0EDEC6C32249ABF9007D7468 /* BayesianProbitRegressor.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6AC2249ABF9007D7468 /* BayesianProbitRegressor.pb.swift */; };
+		0EDEC6C42249ABF9007D7468 /* Identity.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6AD2249ABF9007D7468 /* Identity.pb.swift */; };
+		0EDEC6C52249ABF9007D7468 /* Normalizer.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6AE2249ABF9007D7468 /* Normalizer.pb.swift */; };
+		0EDEC6C62249ABF9007D7468 /* DictVectorizer.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6AF2249ABF9007D7468 /* DictVectorizer.pb.swift */; };
+		0EDEC6C72249ABF9007D7468 /* TextClassifier.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6B02249ABF9007D7468 /* TextClassifier.pb.swift */; };
+		0EDEC6C82249ABF9007D7468 /* SVM.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6B12249ABF9007D7468 /* SVM.pb.swift */; };
+		0EDEC6C92249ABF9007D7468 /* WordTagger.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6B22249ABF9007D7468 /* WordTagger.pb.swift */; };
+		0EDEC6CA2249ABF9007D7468 /* FeatureVectorizer.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6B32249ABF9007D7468 /* FeatureVectorizer.pb.swift */; };
+		0EDEC6CB2249ABF9007D7468 /* Model.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6B42249ABF9007D7468 /* Model.pb.swift */; };
+		0EDEC6CC2249ABF9007D7468 /* Scaler.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6B52249ABF9007D7468 /* Scaler.pb.swift */; };
+		0EDEC6CD2249ABF9007D7468 /* CategoricalMapping.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6B62249ABF9007D7468 /* CategoricalMapping.pb.swift */; };
+		0EDEC6CE2249ABF9007D7468 /* FeatureTypes.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6B72249ABF9007D7468 /* FeatureTypes.pb.swift */; };
+		0EDEC6CF2249ABF9007D7468 /* NeuralNetwork.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6B82249ABF9007D7468 /* NeuralNetwork.pb.swift */; };
+		0EDEC6D02249ABF9007D7468 /* VisionFeaturePrint.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6B92249ABF9007D7468 /* VisionFeaturePrint.pb.swift */; };
+		0EDEC6D12249ABF9007D7468 /* CustomModel.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6BA2249ABF9007D7468 /* CustomModel.pb.swift */; };
+		0EDEC6D22249ABF9007D7468 /* DataStructures.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6BB2249ABF9007D7468 /* DataStructures.pb.swift */; };
+		0EDEC6D32249ABF9007D7468 /* OneHotEncoder.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6BC2249ABF9007D7468 /* OneHotEncoder.pb.swift */; };
+		0EDEC6D42249ABF9007D7468 /* TreeEnsemble.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6BD2249ABF9007D7468 /* TreeEnsemble.pb.swift */; };
+		0EDEC6D52249ABF9007D7468 /* Imputer.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6BE2249ABF9007D7468 /* Imputer.pb.swift */; };
+		0EDEC6D62249ABF9007D7468 /* GLMRegressor.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6BF2249ABF9007D7468 /* GLMRegressor.pb.swift */; };
+		0EDEC6D72249ABF9007D7468 /* ArrayFeatureExtractor.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6C02249ABF9007D7468 /* ArrayFeatureExtractor.pb.swift */; };
+		0EDEC6D82249ABF9007D7468 /* GLMClassifier.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6C12249ABF9007D7468 /* GLMClassifier.pb.swift */; };
+		0EDEC6D92249ABF9007D7468 /* NonMaximumSuppression.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6C22249ABF9007D7468 /* NonMaximumSuppression.pb.swift */; };
+		0EDEC6DC2249AC59007D7468 /* SwiftProtobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EDEC6DB2249AC59007D7468 /* SwiftProtobuf.framework */; };
+		0EDEC6DE2249ACB4007D7468 /* MLModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDEC6DD2249ACB4007D7468 /* MLModel.swift */; };
 		0EE76E352220DA9300D7F2CA /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE76E342220DA9200D7F2CA /* Padding.swift */; };
 		0EE76E372220E8DD00D7F2CA /* LayerEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE76E362220E8DD00D7F2CA /* LayerEnums.swift */; };
 /* End PBXBuildFile section */
@@ -102,6 +127,31 @@
 		0EBCB9742220F96500547393 /* PaddingExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingExampleView.swift; sourceTree = "<group>"; };
 		0EDEC64B2240728C007D7468 /* UpdateRule.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = UpdateRule.storyboard; sourceTree = "<group>"; };
 		0EDEC64D2240733C007D7468 /* UpdateRuleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRuleViewController.swift; sourceTree = "<group>"; };
+		0EDEC6AC2249ABF9007D7468 /* BayesianProbitRegressor.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BayesianProbitRegressor.pb.swift; sourceTree = "<group>"; };
+		0EDEC6AD2249ABF9007D7468 /* Identity.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identity.pb.swift; sourceTree = "<group>"; };
+		0EDEC6AE2249ABF9007D7468 /* Normalizer.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Normalizer.pb.swift; sourceTree = "<group>"; };
+		0EDEC6AF2249ABF9007D7468 /* DictVectorizer.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictVectorizer.pb.swift; sourceTree = "<group>"; };
+		0EDEC6B02249ABF9007D7468 /* TextClassifier.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextClassifier.pb.swift; sourceTree = "<group>"; };
+		0EDEC6B12249ABF9007D7468 /* SVM.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVM.pb.swift; sourceTree = "<group>"; };
+		0EDEC6B22249ABF9007D7468 /* WordTagger.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordTagger.pb.swift; sourceTree = "<group>"; };
+		0EDEC6B32249ABF9007D7468 /* FeatureVectorizer.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureVectorizer.pb.swift; sourceTree = "<group>"; };
+		0EDEC6B42249ABF9007D7468 /* Model.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.pb.swift; sourceTree = "<group>"; };
+		0EDEC6B52249ABF9007D7468 /* Scaler.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scaler.pb.swift; sourceTree = "<group>"; };
+		0EDEC6B62249ABF9007D7468 /* CategoricalMapping.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoricalMapping.pb.swift; sourceTree = "<group>"; };
+		0EDEC6B72249ABF9007D7468 /* FeatureTypes.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureTypes.pb.swift; sourceTree = "<group>"; };
+		0EDEC6B82249ABF9007D7468 /* NeuralNetwork.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeuralNetwork.pb.swift; sourceTree = "<group>"; };
+		0EDEC6B92249ABF9007D7468 /* VisionFeaturePrint.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionFeaturePrint.pb.swift; sourceTree = "<group>"; };
+		0EDEC6BA2249ABF9007D7468 /* CustomModel.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomModel.pb.swift; sourceTree = "<group>"; };
+		0EDEC6BB2249ABF9007D7468 /* DataStructures.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStructures.pb.swift; sourceTree = "<group>"; };
+		0EDEC6BC2249ABF9007D7468 /* OneHotEncoder.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneHotEncoder.pb.swift; sourceTree = "<group>"; };
+		0EDEC6BD2249ABF9007D7468 /* TreeEnsemble.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeEnsemble.pb.swift; sourceTree = "<group>"; };
+		0EDEC6BE2249ABF9007D7468 /* Imputer.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Imputer.pb.swift; sourceTree = "<group>"; };
+		0EDEC6BF2249ABF9007D7468 /* GLMRegressor.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GLMRegressor.pb.swift; sourceTree = "<group>"; };
+		0EDEC6C02249ABF9007D7468 /* ArrayFeatureExtractor.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayFeatureExtractor.pb.swift; sourceTree = "<group>"; };
+		0EDEC6C12249ABF9007D7468 /* GLMClassifier.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GLMClassifier.pb.swift; sourceTree = "<group>"; };
+		0EDEC6C22249ABF9007D7468 /* NonMaximumSuppression.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonMaximumSuppression.pb.swift; sourceTree = "<group>"; };
+		0EDEC6DB2249AC59007D7468 /* SwiftProtobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftProtobuf.framework; path = ../../Library/Frameworks/SwiftProtobuf.framework; sourceTree = "<group>"; };
+		0EDEC6DD2249ACB4007D7468 /* MLModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLModel.swift; sourceTree = "<group>"; };
 		0EE76E342220DA9200D7F2CA /* Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padding.swift; sourceTree = "<group>"; };
 		0EE76E362220E8DD00D7F2CA /* LayerEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerEnums.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +161,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EDEC6DC2249AC59007D7468 /* SwiftProtobuf.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +181,7 @@
 				0EAD456C220BC07B001DEA07 /* SwiftNNTrainer */,
 				0EAD4581220BC07D001DEA07 /* SwiftNNTrainerTests */,
 				0EAD456B220BC07B001DEA07 /* Products */,
+				0EDEC6DA2249AC59007D7468 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -146,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				0EAD4571220BC07B001DEA07 /* Document.swift */,
+				0EDEC6DD2249ACB4007D7468 /* MLModel.swift */,
 				0EAD4598220E4EED001DEA07 /* DataViewController.swift */,
 				0EAD459A220E5008001DEA07 /* NetworkViewController.swift */,
 				0EAD459C220E511D001DEA07 /* TrainingViewController.swift */,
@@ -183,6 +236,7 @@
 				0EAD4575220BC07D001DEA07 /* Main.storyboard */,
 				0EAD4578220BC07D001DEA07 /* Info.plist */,
 				0EAD4579220BC07D001DEA07 /* SwiftNNTrainer.entitlements */,
+				0EDEC6AB2249AA9B007D7468 /* MLModel */,
 				0EAD4595220BF28F001DEA07 /* From Other Parties */,
 			);
 			path = SwiftNNTrainer;
@@ -205,6 +259,44 @@
 				0EAD4591220BD446001DEA07 /* Float16.swift */,
 			);
 			path = "From Other Parties";
+			sourceTree = "<group>";
+		};
+		0EDEC6AB2249AA9B007D7468 /* MLModel */ = {
+			isa = PBXGroup;
+			children = (
+				0EDEC6C02249ABF9007D7468 /* ArrayFeatureExtractor.pb.swift */,
+				0EDEC6AC2249ABF9007D7468 /* BayesianProbitRegressor.pb.swift */,
+				0EDEC6B62249ABF9007D7468 /* CategoricalMapping.pb.swift */,
+				0EDEC6BA2249ABF9007D7468 /* CustomModel.pb.swift */,
+				0EDEC6BB2249ABF9007D7468 /* DataStructures.pb.swift */,
+				0EDEC6AF2249ABF9007D7468 /* DictVectorizer.pb.swift */,
+				0EDEC6B72249ABF9007D7468 /* FeatureTypes.pb.swift */,
+				0EDEC6B32249ABF9007D7468 /* FeatureVectorizer.pb.swift */,
+				0EDEC6C12249ABF9007D7468 /* GLMClassifier.pb.swift */,
+				0EDEC6BF2249ABF9007D7468 /* GLMRegressor.pb.swift */,
+				0EDEC6AD2249ABF9007D7468 /* Identity.pb.swift */,
+				0EDEC6BE2249ABF9007D7468 /* Imputer.pb.swift */,
+				0EDEC6B42249ABF9007D7468 /* Model.pb.swift */,
+				0EDEC6B82249ABF9007D7468 /* NeuralNetwork.pb.swift */,
+				0EDEC6C22249ABF9007D7468 /* NonMaximumSuppression.pb.swift */,
+				0EDEC6AE2249ABF9007D7468 /* Normalizer.pb.swift */,
+				0EDEC6BC2249ABF9007D7468 /* OneHotEncoder.pb.swift */,
+				0EDEC6B52249ABF9007D7468 /* Scaler.pb.swift */,
+				0EDEC6B12249ABF9007D7468 /* SVM.pb.swift */,
+				0EDEC6B02249ABF9007D7468 /* TextClassifier.pb.swift */,
+				0EDEC6BD2249ABF9007D7468 /* TreeEnsemble.pb.swift */,
+				0EDEC6B92249ABF9007D7468 /* VisionFeaturePrint.pb.swift */,
+				0EDEC6B22249ABF9007D7468 /* WordTagger.pb.swift */,
+			);
+			path = MLModel;
+			sourceTree = "<group>";
+		};
+		0EDEC6DA2249AC59007D7468 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0EDEC6DB2249AC59007D7468 /* SwiftProtobuf.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,9 +407,16 @@
 			files = (
 				0E228FEA221B04E1008FBE3B /* DataParserViewController.swift in Sources */,
 				0EAD459D220E511D001DEA07 /* TrainingViewController.swift in Sources */,
+				0EDEC6D82249ABF9007D7468 /* GLMClassifier.pb.swift in Sources */,
 				0EAD456E220BC07B001DEA07 /* AppDelegate.swift in Sources */,
+				0EDEC6D32249ABF9007D7468 /* OneHotEncoder.pb.swift in Sources */,
 				0EAD4597220D0A22001DEA07 /* Network3DScene.swift in Sources */,
 				0E8CA01B22139B7C00BA46F8 /* MTLBuffer.swift in Sources */,
+				0EDEC6CF2249ABF9007D7468 /* NeuralNetwork.pb.swift in Sources */,
+				0EDEC6C82249ABF9007D7468 /* SVM.pb.swift in Sources */,
+				0EDEC6D02249ABF9007D7468 /* VisionFeaturePrint.pb.swift in Sources */,
+				0EDEC6CD2249ABF9007D7468 /* CategoricalMapping.pb.swift in Sources */,
+				0EDEC6D52249ABF9007D7468 /* Imputer.pb.swift in Sources */,
 				0EDEC64E2240733C007D7468 /* UpdateRuleViewController.swift in Sources */,
 				0EAD4592220BD446001DEA07 /* Float16.swift in Sources */,
 				0E228FEC221CD47E008FBE3B /* TextFileReader.swift in Sources */,
@@ -325,23 +424,40 @@
 				0EA916DA2224B9AB0039B365 /* Network3DView.swift in Sources */,
 				0EBCB9732220F16A00547393 /* PaddingViewController.swift in Sources */,
 				0EE76E372220E8DD00D7F2CA /* LayerEnums.swift in Sources */,
+				0EDEC6D22249ABF9007D7468 /* DataStructures.pb.swift in Sources */,
+				0EDEC6D12249ABF9007D7468 /* CustomModel.pb.swift in Sources */,
 				0EAD4594220BF013001DEA07 /* Layer.swift in Sources */,
+				0EDEC6CB2249ABF9007D7468 /* Model.pb.swift in Sources */,
 				0E3E64DC2228DC1B0001897C /* NormalizationData.swift in Sources */,
 				0E228FD4221529B6008FBE3B /* InputDataRuler.swift in Sources */,
+				0EDEC6CA2249ABF9007D7468 /* FeatureVectorizer.pb.swift in Sources */,
+				0EDEC6CE2249ABF9007D7468 /* FeatureTypes.pb.swift in Sources */,
+				0EDEC6C92249ABF9007D7468 /* WordTagger.pb.swift in Sources */,
+				0EDEC6C52249ABF9007D7468 /* Normalizer.pb.swift in Sources */,
 				0E228FD22213D695008FBE3B /* PlotView.swift in Sources */,
 				0E3E64E1222C84000001897C /* ConcatenationContraction.swift in Sources */,
 				0EBCB9752220F96500547393 /* PaddingExampleView.swift in Sources */,
 				0E3E64DE222B52350001897C /* AtomicVariables.swift in Sources */,
 				0E3E64E7223367A40001897C /* DuplicateFlowViewController.swift in Sources */,
+				0EDEC6DE2249ACB4007D7468 /* MLModel.swift in Sources */,
+				0EDEC6C62249ABF9007D7468 /* DictVectorizer.pb.swift in Sources */,
 				0EE76E352220DA9300D7F2CA /* Padding.swift in Sources */,
 				0EAD4572220BC07B001DEA07 /* Document.swift in Sources */,
+				0EDEC6C42249ABF9007D7468 /* Identity.pb.swift in Sources */,
 				0E228FE6221AFED1008FBE3B /* DataAsImageViewController.swift in Sources */,
 				0E3E64E3222CD0B00001897C /* Flow.swift in Sources */,
 				0EAD459B220E5008001DEA07 /* NetworkViewController.swift in Sources */,
 				0EAD458E220BD381001DEA07 /* MPSImage+Floats.swift in Sources */,
 				0E228FD622152BC2008FBE3B /* DataParser.swift in Sources */,
+				0EDEC6D62249ABF9007D7468 /* GLMRegressor.pb.swift in Sources */,
 				0EAD45A1220F276E001DEA07 /* TrainingData.swift in Sources */,
+				0EDEC6D92249ABF9007D7468 /* NonMaximumSuppression.pb.swift in Sources */,
 				0EA916E02226E1420039B365 /* MPSImageExtensions.swift in Sources */,
+				0EDEC6D42249ABF9007D7468 /* TreeEnsemble.pb.swift in Sources */,
+				0EDEC6CC2249ABF9007D7468 /* Scaler.pb.swift in Sources */,
+				0EDEC6D72249ABF9007D7468 /* ArrayFeatureExtractor.pb.swift in Sources */,
+				0EDEC6C32249ABF9007D7468 /* BayesianProbitRegressor.pb.swift in Sources */,
+				0EDEC6C72249ABF9007D7468 /* TextClassifier.pb.swift in Sources */,
 				0EA916DE222503F90039B365 /* AdditionalDataViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -497,6 +613,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = SwiftNNTrainer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -514,6 +634,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = SwiftNNTrainer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

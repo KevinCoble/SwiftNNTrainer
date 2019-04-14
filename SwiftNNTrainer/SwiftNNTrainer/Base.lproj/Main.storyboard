@@ -1664,6 +1664,25 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="T48-a0-lrx">
+                                <rect key="frame" x="599" y="71" width="141" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Number of parameters" id="kfn-Xf-Z7k">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ofN-C6-Oln">
+                                <rect key="frame" x="601" y="41" width="134" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="134" id="S7I-gV-ZfQ"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="mlP-2n-e64">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <sceneView translatesAutoresizingMaskIntoConstraints="NO" id="wq3-Un-8wP" customClass="Network3DView" customModule="SwiftNNTrainer" customModuleProvider="target">
                                 <rect key="frame" x="20" y="20" width="477" height="371"/>
                             </sceneView>
@@ -2522,27 +2541,55 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
+                            <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="elJ-Dn-K8w">
+                                <rect key="frame" x="403" y="396" width="96" height="19"/>
+                                <sliderCell key="cell" state="on" alignment="left" minValue="1" maxValue="100" doubleValue="100" tickMarkPosition="above" sliderType="linear" id="L9h-iN-mdp"/>
+                                <connections>
+                                    <action selector="onOutputBlockScaleChanged:" target="KxR-2m-EkM" id="aCN-dm-Wbb"/>
+                                </connections>
+                            </slider>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IB1-ol-CXC">
+                                <rect key="frame" x="295" y="398" width="104" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Out Block Scale:" id="hc9-EC-TZc">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="KTD-8V-7i5" secondAttribute="bottom" constant="96" id="2x5-RO-hS1"/>
                             <constraint firstAttribute="trailing" secondItem="xt0-U7-TpG" secondAttribute="trailing" constant="79" id="3Im-DP-Npk"/>
+                            <constraint firstAttribute="bottom" secondItem="ofN-C6-Oln" secondAttribute="bottom" constant="41" id="4cC-Vl-ybA"/>
                             <constraint firstItem="Jdm-wP-grC" firstAttribute="leading" secondItem="Qt4-zo-9y5" secondAttribute="leading" constant="20" id="54T-4P-4MM"/>
                             <constraint firstAttribute="bottom" secondItem="wq3-Un-8wP" secondAttribute="bottom" constant="20" id="5Xl-d4-eHj"/>
+                            <constraint firstItem="ofN-C6-Oln" firstAttribute="top" secondItem="T48-a0-lrx" secondAttribute="bottom" constant="8" id="7am-UD-z18"/>
                             <constraint firstItem="KTD-8V-7i5" firstAttribute="leading" secondItem="wq3-Un-8wP" secondAttribute="trailing" constant="104" id="8tE-BH-eNb"/>
+                            <constraint firstAttribute="trailing" secondItem="ofN-C6-Oln" secondAttribute="trailing" priority="800" constant="465" id="Asy-hg-p9h"/>
                             <constraint firstItem="wq3-Un-8wP" firstAttribute="top" secondItem="Jdm-wP-grC" secondAttribute="bottom" constant="31" id="Ddc-lq-wjF"/>
+                            <constraint firstItem="ofN-C6-Oln" firstAttribute="top" secondItem="T48-a0-lrx" secondAttribute="bottom" constant="8" symbolic="YES" id="FCO-VX-NLb"/>
                             <constraint firstItem="xt0-U7-TpG" firstAttribute="top" secondItem="Qt4-zo-9y5" secondAttribute="top" constant="140" id="GoP-1G-aEm"/>
+                            <constraint firstItem="wq3-Un-8wP" firstAttribute="top" secondItem="IB1-ol-CXC" secondAttribute="bottom" constant="7" id="LhH-dM-X6u"/>
                             <constraint firstItem="wq3-Un-8wP" firstAttribute="top" secondItem="hld-81-LON" secondAttribute="bottom" constant="8" id="PMd-Wb-tuB"/>
+                            <constraint firstItem="elJ-Dn-K8w" firstAttribute="trailing" secondItem="wq3-Un-8wP" secondAttribute="trailing" id="PsT-Vp-ZJ1"/>
                             <constraint firstAttribute="trailing" secondItem="yqr-sq-eIT" secondAttribute="trailing" constant="496" id="QjE-1G-ex8"/>
                             <constraint firstItem="xt0-U7-TpG" firstAttribute="leading" secondItem="2dT-7n-KL4" secondAttribute="leading" id="USR-jG-C1d"/>
+                            <constraint firstItem="T48-a0-lrx" firstAttribute="top" secondItem="KTD-8V-7i5" secondAttribute="bottom" constant="8" id="VHs-3A-ZRe"/>
                             <constraint firstItem="KTD-8V-7i5" firstAttribute="top" secondItem="yqr-sq-eIT" secondAttribute="bottom" constant="8" symbolic="YES" id="WD3-a9-D1F"/>
                             <constraint firstItem="yqr-sq-eIT" firstAttribute="leading" secondItem="KTD-8V-7i5" secondAttribute="leading" id="Yfh-9m-2Cf"/>
                             <constraint firstItem="2dT-7n-KL4" firstAttribute="centerY" secondItem="VDb-JZ-DVR" secondAttribute="centerY" id="Zhz-Xt-THx"/>
+                            <constraint firstItem="T48-a0-lrx" firstAttribute="leading" secondItem="ofN-C6-Oln" secondAttribute="leading" id="b8W-9Q-wsJ"/>
                             <constraint firstAttribute="trailing" secondItem="KTD-8V-7i5" secondAttribute="trailing" constant="20" id="bc9-TH-5Xm"/>
+                            <constraint firstItem="elJ-Dn-K8w" firstAttribute="leading" secondItem="IB1-ol-CXC" secondAttribute="trailing" constant="8" id="f0j-59-tBw"/>
                             <constraint firstItem="Jdm-wP-grC" firstAttribute="top" secondItem="VDb-JZ-DVR" secondAttribute="bottom" constant="8" id="gVZ-14-Ckk"/>
                             <constraint firstItem="wq3-Un-8wP" firstAttribute="top" secondItem="Jdm-wP-grC" secondAttribute="bottom" constant="31" id="idg-Lt-shb"/>
+                            <constraint firstItem="ofN-C6-Oln" firstAttribute="leading" secondItem="T48-a0-lrx" secondAttribute="leading" id="ioT-sG-QUu"/>
                             <constraint firstItem="xt0-U7-TpG" firstAttribute="leading" secondItem="hld-81-LON" secondAttribute="trailing" priority="500" constant="311" id="jt9-WW-fO0"/>
+                            <constraint firstAttribute="trailing" secondItem="T48-a0-lrx" secondAttribute="trailing" priority="500" constant="462" id="kI3-Ud-XOc"/>
+                            <constraint firstItem="wq3-Un-8wP" firstAttribute="top" secondItem="elJ-Dn-K8w" secondAttribute="bottom" constant="7" id="mGx-bf-d7U"/>
+                            <constraint firstItem="ofN-C6-Oln" firstAttribute="leading" secondItem="wq3-Un-8wP" secondAttribute="trailing" constant="104" id="mIo-YK-4nl"/>
                             <constraint firstItem="VDb-JZ-DVR" firstAttribute="leading" secondItem="Qt4-zo-9y5" secondAttribute="leading" constant="20" id="pAQ-sI-imV"/>
                             <constraint firstItem="VDb-JZ-DVR" firstAttribute="top" secondItem="Qt4-zo-9y5" secondAttribute="top" constant="20" id="rHN-4m-5Vf"/>
+                            <constraint firstItem="IB1-ol-CXC" firstAttribute="leading" secondItem="hld-81-LON" secondAttribute="trailing" priority="500" constant="37" id="rMg-l7-C9p"/>
                             <constraint firstItem="wq3-Un-8wP" firstAttribute="leading" secondItem="hld-81-LON" secondAttribute="leading" id="tRJ-Dz-O5y"/>
                             <constraint firstItem="xt0-U7-TpG" firstAttribute="leading" secondItem="Jdm-wP-grC" secondAttribute="trailing" constant="74" id="xs6-xE-KcB"/>
                             <constraint firstItem="wq3-Un-8wP" firstAttribute="leading" secondItem="Qt4-zo-9y5" secondAttribute="leading" constant="20" id="zXZ-tS-pMh"/>
@@ -2572,6 +2619,7 @@
                         <outlet property="lossFunctionType" destination="Kde-aW-Nf1" id="ejn-Og-DSR"/>
                         <outlet property="network3DView" destination="wq3-Un-8wP" id="KYB-WH-7aS"/>
                         <outlet property="networkValidity" destination="KTD-8V-7i5" id="BgV-cX-HRr"/>
+                        <outlet property="numberParameters" destination="ofN-C6-Oln" id="RkJ-C9-JiM"/>
                         <outlet property="paddingButton" destination="vIe-zB-f4h" id="0Qs-cX-jV5"/>
                         <outlet property="paddingDescription" destination="mpz-XG-ESP" id="Bvf-Ll-QyP"/>
                         <outlet property="setOutputFlowButton" destination="WBk-N3-eYF" id="Erp-AG-SnR"/>
@@ -2654,6 +2702,12 @@
                                                 <action selector="openDocument:" target="Ady-hI-5gd" id="bVn-NM-KNZ"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Import MLModel…" tag="800" id="y5n-kD-pJP">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="onImportMLModel:" target="Voe-Tx-rLC" id="sMw-zU-7by"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Open Recent" id="tXI-mr-wws">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Open Recent" systemMenu="recentDocuments" id="oas-Oc-fiZ">
@@ -2668,6 +2722,26 @@
                                             </menu>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
+                                        <menuItem title="Export MLModel" id="0af-g6-O4J">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Export MLModel" id="re1-DZ-KsN">
+                                                <items>
+                                                    <menuItem title="With Array Input..." tag="900" id="q48-Wt-t7O">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="onExportWithArrayInput:" target="Voe-Tx-rLC" id="uPf-Ps-dGH"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="With Image Input..." tag="901" id="CxX-k9-TBm">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="onExportWithImageInput:" target="Voe-Tx-rLC" id="beU-qB-EKr"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="qz2-UJ-Udu"/>
                                         <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                             <connections>
                                                 <action selector="performClose:" target="Ady-hI-5gd" id="HmO-Ls-i7Q"/>
@@ -3356,7 +3430,7 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dwQ-Iw-dVd">
+                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dwQ-Iw-dVd">
                                 <rect key="frame" x="132" y="147" width="80" height="32"/>
                                 <buttonCell key="cell" type="push" title="Debug" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DCE-Ck-j4V">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>

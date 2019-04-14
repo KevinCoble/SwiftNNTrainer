@@ -37,8 +37,6 @@ class TrainingData
     var trainingData : [(input:[Float], output:[Float], outputClass: Int)]
     var testingData : [(input:[Float], output:[Float], outputClass: Int)]
     
-    var labels : [String]?
-    
     //  Loading variables
     var inputDimensions : [Int]
     var outputDimensions : [Int]
@@ -82,7 +80,6 @@ class TrainingData
         }
         
         //  If a label file, start with it (labels may be in output data later)
-        if (docData.outputType == .Classification) { labels = [] }
         if (docData.separateLabelFile) {
             if (!loadLabels()) { return nil }
         }
@@ -296,7 +293,7 @@ class TrainingData
         do {
             let fileData = try String(contentsOf: docData!.labelFileURL!, encoding: .utf8)
             let lines : [String] = fileData.components(separatedBy: CharacterSet.newlines)
-            labels = lines.filter { $0.count > 0}
+            docData!.labels = lines.filter { $0.count > 0}
         }
         catch {
             docData!.loadError = "Unable to read label file"
@@ -328,11 +325,11 @@ class TrainingData
             //  Get the parser
             if let parser = parser {
                 inputStream.open()
+                defer { inputStream.close() }
                 if let error = parser.parseBinaryFile(trainingData: self, inputFile : inputStream) {
                     docData!.loadError = error
                     return false
                 }
-                inputStream.close()
             }
             else {
                 docData!.loadError = "No Parser defined for the output data"
@@ -421,7 +418,7 @@ class TrainingData
                     var labelIndex = 0
                     
                     var foundLabel = false
-                    if let labels = labels {
+                    if let labels = docData!.labels {
                         for index in 0..<labels.count {
                             if(labels[index].caseInsensitiveCompare(label) == .orderedSame) {
                                 labelIndex =  index
@@ -431,8 +428,9 @@ class TrainingData
                         }
                     }
                     if (!foundLabel) {
-                        labelIndex = labels!.count
-                        labels!.append(label)
+                        if (docData!.labels == nil) { docData!.labels = [] }
+                        labelIndex = docData!.labels!.count
+                        docData!.labels!.append(label)
                     }
                     
                     //  Validate the label
@@ -842,6 +840,31 @@ class TrainingData
                 let input = [Float.random(in: 0 ... 1), Float.random(in: 0 ... 1)]
                 let outputClass : Int = (input[0] > 0.5 || input[1] > 0.5) ? 1 : 0
                 testingData.append((input:input, output:[Float(outputClass)], outputClass: outputClass))
+            }
+        }
+
+        //  If a 5x5x1x1, fix the values
+        else if (numInputs == 25) {
+            for _ in 0..<numTraining {
+                var input = [Float](repeating: 0.0, count: numInputs)
+                for i in 0..<numInputs {input[i] = Float(i) * 0.1}
+                var output = [Float](repeating: 0.0, count: numOutputs)
+                for i in 0..<numOutputs {output[i] = Float.random(in: 0 ... 1)}
+                var outputClass = Int((Float(arc4random()) / Float(UINT32_MAX)) * Float(numOutputs)) + 1
+                if (outputClass >= numOutputs)  { outputClass -= 1 }
+                trainingData.append((input:input, output:output, outputClass: outputClass))
+            }
+            for _ in 0..<numTesting {
+                var input = [Float](repeating: 0.0, count: numInputs)
+                for i in 0..<numInputs {input[i] = Float(i) * 0.1}
+                var output = [Float](repeating: 0.0, count: numOutputs)
+                for i in 0..<numOutputs {output[i] = Float.random(in: 0 ... 1)}
+                if (numOutputs == 1) {
+                    testingData.append((input:input, output:output, outputClass: Int.random(in: 0 ... 1)))
+                }
+                else {
+                    testingData.append((input:input, output:output, outputClass: Int.random(in: 1 ... numOutputs)))
+                }
             }
         }
 

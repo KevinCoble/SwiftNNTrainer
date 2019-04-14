@@ -1,5 +1,21 @@
 SwiftNNTrainier is a program for training neural networks using Apples' Metal Performance Shader library.  The program allows you to define a data source, create a network topology, and test and/or train the network using that data.
 
+#### Latest Added Features
+* Importing and exporting some models to/from MLModel files.  You can now use SwiftNNTrainer to create mlmodel files for use in other applications.
+
+* Scaling of 3D View X axis
+
+* Model parameter counting
+
+* Labels are now stored as part of the document.  This allows labels to be loaded/saved from/to MLModel files
+
+* Document file version is now 2 - so document files written by this version will not be able to be read by older versions.
+
+## Installation Requirements
+The program now requires the Swift protobuf framework.  This is used to read and write MLModel files.  A MacOS version of the framework is included in the project files, but will have to installed into an appropriate directory.  If you wish, download and build the latest version from [here](https://github.com/apple/swift-protobuf).
+
+## Intro
+
 ![Image](Manual/NetworkTab.png)
 
 The starting of a manual is available [here](Manual/Manual.md): 
@@ -26,7 +42,9 @@ A quick way to get started with the program is to load one of the provided data 
 
 ### Quickest Start
 The following will get you started using SwiftNNTrainer
-* Download and build the project
+* Download the project
+* Install the protobuf framework in a directory configured for frameworks
+* Build the project
 * Download the [MNIST data set](http://yann.lecun.com/exdb/mnist/)
 * Run the SwiftNNTrainer program
 * Open the Examples/Network Models/MNIST LeNet-1 document

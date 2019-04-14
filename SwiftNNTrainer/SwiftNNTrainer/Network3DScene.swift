@@ -12,11 +12,12 @@ import SceneKit
 class Network3DScene: SCNScene {
     
     var use_XxY_for_1x1xN = true
+    var outputBlockScale : CGFloat = 1.0
     
     let cameraNode = SCNNode()
     var currentCameraSpan : CGFloat = 15
     var cameraZoomScale : CGFloat = 10.0
-    let maxNetworkSize :CGFloat = 2000.0
+    let maxNetworkSize :CGFloat = 20000.0
     var addedNodes : [SCNNode] = []
     
     var flowSizes : [SCNVector3]?
@@ -38,7 +39,7 @@ class Network3DScene: SCNScene {
         sunNode.light = SCNLight()
         sunNode.light!.type = SCNLight.LightType.omni
         sunNode.light!.color = NSColor(white: 0.75, alpha: 1.0)
-        sunNode.position = SCNVector3Make(2000.0, 1600.0, 3000.0)
+        sunNode.position = SCNVector3Make(20000.0, 16000.0, 30000.0)
         self.rootNode.addChildNode(sunNode)
         let ambientNode = SCNNode()
         ambientNode.light = SCNLight()
@@ -100,7 +101,7 @@ class Network3DScene: SCNScene {
                     if (input.type == .Flow) {
                         //  Output block
                         let outputDimensions = getDisplayDimensions(forDimensions: document.flows[input.index].currentOutputSize)
-                        let outputGeometry = createBox(width: CGFloat(outputDimensions[2]), height: CGFloat(outputDimensions[1]), length: CGFloat(outputDimensions[0]))
+                        let outputGeometry = createBox(width: CGFloat(outputDimensions[2]), height: CGFloat(outputDimensions[1]), length: CGFloat(outputDimensions[0]), xScale: outputBlockScale)
                         if let material = createFeatureTexture(color: NSColor.yellow) {
                             outputGeometry.materials = [material]
                         }
@@ -108,11 +109,11 @@ class Network3DScene: SCNScene {
                             outputGeometry.firstMaterial!.diffuse.contents = NSColor.yellow
                         }
                         let outputNode = SCNNode(geometry: outputGeometry)
-                        var xPos = flowLocations![input.index].x + (CGFloat(outputDimensions[2]) * 0.5)
+                        var xPos = flowLocations![input.index].x + (CGFloat(outputDimensions[2]) * 0.5 * outputBlockScale)
                         outputNode.position = SCNVector3Make(xPos, 0.0, flowLocations![input.index].y)
                         self.rootNode.addChildNode(outputNode)
                         addedNodes.append(outputNode)
-                        xPos += CGFloat(outputDimensions[2]) * 0.5      //  X coord right of the flow output block
+                        xPos += CGFloat(outputDimensions[2]) * 0.5 * outputBlockScale     //  X coord right of the flow output block
                         
                         //  Skew box
                         let width = xPosition - xPos
@@ -129,7 +130,7 @@ class Network3DScene: SCNScene {
             }
             
             //  Add the input volume
-            let inputGeometry = createBox(width: CGFloat(flowInputDisplaySize[2]), height: CGFloat(flowInputDisplaySize[1]), length: CGFloat(flowInputDisplaySize[0]))
+            let inputGeometry = createBox(width: CGFloat(flowInputDisplaySize[2]), height: CGFloat(flowInputDisplaySize[1]), length: CGFloat(flowInputDisplaySize[0]), xScale: 1.0)
             var color = NSColor.yellow       //  Yellow for intermediate inputs
             if (flow.usesOnlyDataInput) { color = NSColor.green }  //  Green for initial inputs
             if let material = createFeatureTexture(color: color) {
@@ -144,7 +145,7 @@ class Network3DScene: SCNScene {
             self.rootNode.addChildNode(inputNode)
             addedNodes.append(inputNode)
             if let layer = flow.layers.first {
-                addInputPadding(layer: layer, xPos: xPosition, inputDimensions: flowInputDimensions, zOffset : flowLocations![flowIndex].y)
+                addInputPadding(layer: layer, xPos: xPosition, inputDimensions: flowInputDimensions, zOffset : flowLocations![flowIndex].y, xScale: 1.0)
             }
             xPosition += CGFloat(flowInputDisplaySize[2]) * 0.5
             
@@ -182,7 +183,7 @@ class Network3DScene: SCNScene {
                 else {
                     //  If there was a previous output, add the output block
                     if (outputDimensions[0] != 0) {
-                        let intermediateGeometry = createBox(width: CGFloat(outputDisplaySize[2]), height: CGFloat(outputDisplaySize[1]), length: CGFloat(outputDisplaySize[0]))
+                        let intermediateGeometry = createBox(width: CGFloat(outputDisplaySize[2]), height: CGFloat(outputDisplaySize[1]), length: CGFloat(outputDisplaySize[0]), xScale: outputBlockScale)
                         if let material = createFeatureTexture(color: NSColor.yellow) {
                             intermediateGeometry.materials = [material]
                         }
@@ -190,12 +191,12 @@ class Network3DScene: SCNScene {
                             intermediateGeometry.firstMaterial!.diffuse.contents = NSColor.yellow
                         }
                         let intermediateNode = SCNNode(geometry: intermediateGeometry)
-                        xPosition += CGFloat(outputDisplaySize[2]) * 0.5
+                        xPosition += CGFloat(outputDisplaySize[2]) * 0.5 * outputBlockScale
                         intermediateNode.position = SCNVector3Make(xPosition, 0.0, flowLocations![flowIndex].y)
                         self.rootNode.addChildNode(intermediateNode)
                         addedNodes.append(intermediateNode)
-                        addInputPadding(layer: layer, xPos: xPosition, inputDimensions: outputDisplaySize, zOffset: flowLocations![flowIndex].y)
-                        xPosition += CGFloat(outputDisplaySize[2]) * 0.5
+                        addInputPadding(layer: layer, xPos: xPosition, inputDimensions: outputDimensions, zOffset: flowLocations![flowIndex].y, xScale: outputBlockScale)
+                        xPosition += CGFloat(outputDisplaySize[2]) * 0.5 * outputBlockScale
                     }
 
                     //  Get the padded input size
@@ -253,7 +254,7 @@ class Network3DScene: SCNScene {
         
         //  Add the output volume
         let outputDisplaySize = getDisplayDimensions(forDimensions: document.outputDimensions)
-        let outputGeometry = createBox(width: CGFloat(outputDisplaySize[2]), height: CGFloat(outputDisplaySize[1]), length: CGFloat(outputDisplaySize[0]))
+        let outputGeometry = createBox(width: CGFloat(outputDisplaySize[2]), height: CGFloat(outputDisplaySize[1]), length: CGFloat(outputDisplaySize[0]), xScale: 1.0)
         if let material = createFeatureTexture(color: NSColor.red) {
             outputGeometry.materials = [material]
         }
@@ -290,7 +291,7 @@ class Network3DScene: SCNScene {
             else {
                 //  If a previous output block, add as an intermediate block
                 if (outputDimensions[0] != 0) {
-                    flowSize.x += CGFloat(outputDimensions[2])
+                    flowSize.x += CGFloat(outputDisplaySize[2]) * outputBlockScale
                     //  Other dimensions checked after padding later
                 }
                 
@@ -334,8 +335,14 @@ class Network3DScene: SCNScene {
                 totalInputWidth += CGFloat(inputDimensions[0]) + 5.0
             }
             else {
-                getTotalWidthOfFlow(flowIndex : input.index, document : document)
-                totalInputWidth += totalWidthsForFlows![input.index] + 5.0
+                if (totalWidthsForFlows![input.index] == 0) {
+                    //  Not processed yet
+                    getTotalWidthOfFlow(flowIndex : input.index, document : document)
+                    totalInputWidth += totalWidthsForFlows![input.index] + 5.0
+                }
+                else {
+                    //  Assume it was part of another input
+                }
             }
         }
         totalInputWidth -= 5.0      //  Remove final inter-input spacing
@@ -392,14 +399,14 @@ class Network3DScene: SCNScene {
         return color
     }
     
-    func addInputPadding(layer: Layer, xPos: CGFloat, inputDimensions: [Int], zOffset : CGFloat)
+    func addInputPadding(layer: Layer, xPos: CGFloat, inputDimensions: [Int], zOffset : CGFloat, xScale : CGFloat)
     {
         let padding = layer.getPaddingSize()
         let opacity : CGFloat = 0.7
         
         //  Padding on the left
         if (padding.left > 0) {
-            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(inputDimensions[1]), length: CGFloat(padding.left))
+            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(inputDimensions[1]), length: CGFloat(padding.left), xScale : xScale)
             if let material = createFeatureTexture(color: NSColor.yellow) {
                 padGeometry.materials = [material]
             }
@@ -415,7 +422,7 @@ class Network3DScene: SCNScene {
         
         //  Padding on the right
         if (padding.right > 0) {
-            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(inputDimensions[1]), length: CGFloat(padding.right))
+            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(inputDimensions[1]), length: CGFloat(padding.right), xScale : xScale)
             if let material = createFeatureTexture(color: NSColor.yellow) {
                 padGeometry.materials = [material]
             }
@@ -431,7 +438,7 @@ class Network3DScene: SCNScene {
         
         //  Padding on the top
         if (padding.top > 0) {
-            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(padding.top), length: CGFloat(inputDimensions[0]))
+            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(padding.top), length: CGFloat(inputDimensions[0]), xScale : xScale)
             if let material = createFeatureTexture(color: NSColor.yellow) {
                 padGeometry.materials = [material]
             }
@@ -447,7 +454,7 @@ class Network3DScene: SCNScene {
         
         //  Padding on the bottom
         if (padding.bottom > 0) {
-            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(padding.bottom), length: CGFloat(inputDimensions[0]))
+            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(padding.bottom), length: CGFloat(inputDimensions[0]), xScale : xScale)
             if let material = createFeatureTexture(color: NSColor.yellow) {
                 padGeometry.materials = [material]
             }
@@ -463,7 +470,7 @@ class Network3DScene: SCNScene {
         
         //  Padding on the top-left
         if (padding.left > 0 && padding.top > 0) {
-            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(padding.top), length: CGFloat(padding.left))
+            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(padding.top), length: CGFloat(padding.left), xScale : xScale)
             if let material = createFeatureTexture(color: NSColor.yellow) {
                 padGeometry.materials = [material]
             }
@@ -479,7 +486,7 @@ class Network3DScene: SCNScene {
         
         //  Padding on the top-right
         if (padding.right > 0 && padding.top > 0) {
-            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(padding.top), length: CGFloat(padding.right))
+            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(padding.top), length: CGFloat(padding.right), xScale : xScale)
             if let material = createFeatureTexture(color: NSColor.yellow) {
                 padGeometry.materials = [material]
             }
@@ -495,7 +502,7 @@ class Network3DScene: SCNScene {
         
         //  Padding on the bottom-left
         if (padding.left > 0 && padding.bottom > 0) {
-            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(padding.bottom), length: CGFloat(padding.left))
+            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(padding.bottom), length: CGFloat(padding.left), xScale : xScale)
             if let material = createFeatureTexture(color: NSColor.yellow) {
                 padGeometry.materials = [material]
             }
@@ -511,7 +518,7 @@ class Network3DScene: SCNScene {
         
         //  Padding on the bottom-right
         if (padding.right > 0 && padding.bottom > 0) {
-            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(padding.bottom), length: CGFloat(padding.right))
+            let padGeometry = createBox(width: CGFloat(inputDimensions[2] * inputDimensions[3]), height: CGFloat(padding.bottom), length: CGFloat(padding.right), xScale : xScale)
             if let material = createFeatureTexture(color: NSColor.yellow) {
                 padGeometry.materials = [material]
             }
@@ -552,38 +559,38 @@ class Network3DScene: SCNScene {
     }
     
     
-    func createBox(width: CGFloat, height: CGFloat, length: CGFloat) -> SCNGeometry
+    func createBox(width: CGFloat, height: CGFloat, length: CGFloat, xScale: CGFloat) -> SCNGeometry
     {
         let coordinates  : [SCNVector3] = [
-            SCNVector3(x: -width/2, y: -height/2, z:  length/2),        //  Front
-            SCNVector3(x:  width/2, y: -height/2, z:  length/2),
-            SCNVector3(x:  width/2, y:  height/2, z:  length/2),
-            SCNVector3(x: -width/2, y:  height/2, z:  length/2),
+            SCNVector3(x: -width/2 * xScale, y: -height/2, z:  length/2),        //  Front
+            SCNVector3(x:  width/2 * xScale, y: -height/2, z:  length/2),
+            SCNVector3(x:  width/2 * xScale, y:  height/2, z:  length/2),
+            SCNVector3(x: -width/2 * xScale, y:  height/2, z:  length/2),
             
-            SCNVector3(x:  width/2, y: -height/2, z:  length/2),        //  Right
-            SCNVector3(x:  width/2, y: -height/2, z: -length/2),
-            SCNVector3(x:  width/2, y:  height/2, z: -length/2),
-            SCNVector3(x:  width/2, y:  height/2, z:  length/2),
+            SCNVector3(x:  width/2 * xScale, y: -height/2, z:  length/2),        //  Right
+            SCNVector3(x:  width/2 * xScale, y: -height/2, z: -length/2),
+            SCNVector3(x:  width/2 * xScale, y:  height/2, z: -length/2),
+            SCNVector3(x:  width/2 * xScale, y:  height/2, z:  length/2),
             
-            SCNVector3(x:  width/2, y: -height/2, z: -length/2),        //  Back
-            SCNVector3(x: -width/2, y: -height/2, z: -length/2),
-            SCNVector3(x: -width/2, y:  height/2, z: -length/2),
-            SCNVector3(x:  width/2, y:  height/2, z: -length/2),
+            SCNVector3(x:  width/2 * xScale, y: -height/2, z: -length/2),        //  Back
+            SCNVector3(x: -width/2 * xScale, y: -height/2, z: -length/2),
+            SCNVector3(x: -width/2 * xScale, y:  height/2, z: -length/2),
+            SCNVector3(x:  width/2 * xScale, y:  height/2, z: -length/2),
             
-            SCNVector3(x: -width/2, y: -height/2, z: -length/2),        //  Left
-            SCNVector3(x: -width/2, y: -height/2, z:  length/2),
-            SCNVector3(x: -width/2, y:  height/2, z:  length/2),
-            SCNVector3(x: -width/2, y:  height/2, z: -length/2),
+            SCNVector3(x: -width/2 * xScale, y: -height/2, z: -length/2),        //  Left
+            SCNVector3(x: -width/2 * xScale, y: -height/2, z:  length/2),
+            SCNVector3(x: -width/2 * xScale, y:  height/2, z:  length/2),
+            SCNVector3(x: -width/2 * xScale, y:  height/2, z: -length/2),
             
-            SCNVector3(x: -width/2, y:  height/2, z:  length/2),        //  Top
-            SCNVector3(x:  width/2, y:  height/2, z:  length/2),
-            SCNVector3(x:  width/2, y:  height/2, z: -length/2),
-            SCNVector3(x: -width/2, y:  height/2, z: -length/2),
+            SCNVector3(x: -width/2 * xScale, y:  height/2, z:  length/2),        //  Top
+            SCNVector3(x:  width/2 * xScale, y:  height/2, z:  length/2),
+            SCNVector3(x:  width/2 * xScale, y:  height/2, z: -length/2),
+            SCNVector3(x: -width/2 * xScale, y:  height/2, z: -length/2),
             
-            SCNVector3(x: -width/2, y: -height/2, z: -length/2),        //  Bottom
-            SCNVector3(x:  width/2, y: -height/2, z: -length/2),
-            SCNVector3(x:  width/2, y: -height/2, z:  length/2),
-            SCNVector3(x: -width/2, y: -height/2, z:  length/2)
+            SCNVector3(x: -width/2 * xScale, y: -height/2, z: -length/2),        //  Bottom
+            SCNVector3(x:  width/2 * xScale, y: -height/2, z: -length/2),
+            SCNVector3(x:  width/2 * xScale, y: -height/2, z:  length/2),
+            SCNVector3(x: -width/2 * xScale, y: -height/2, z:  length/2)
         ]
         
         let normals  : [SCNVector3] = [

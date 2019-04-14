@@ -170,6 +170,9 @@ class Layer : NSObject, NSCoding, MPSCNNConvolutionDataSource
             return dimensions
             
         case .Convolution:
+            //  Set the input channels
+            inputChannels = dimensions[2] * dimensions[3]
+            
             //  Determine the output size
             let xOutputSize = Layer.sizeGivenPadding(method : XPaddingMethod, sourceSize : dimensions[0], kernelSize : kernelWidth, stride: strideX, offset: XOffset, clip: clipWidth)
             let yOutputSize = Layer.sizeGivenPadding(method : YPaddingMethod, sourceSize : dimensions[1], kernelSize : kernelHeight, stride: strideY, offset: YOffset, clip: clipHeight)
@@ -178,7 +181,7 @@ class Layer : NSObject, NSCoding, MPSCNNConvolutionDataSource
         case .Pooling:
             let xOutputSize = Layer.sizeGivenPadding(method : XPaddingMethod, sourceSize : dimensions[0], kernelSize : kernelWidth, stride: strideX, offset: XOffset, clip: clipWidth)
             let yOutputSize = Layer.sizeGivenPadding(method : YPaddingMethod, sourceSize : dimensions[1], kernelSize : kernelHeight, stride: strideY, offset: YOffset, clip: clipHeight)
-            return [xOutputSize, yOutputSize, numChannels, dimensions[3]]
+            return [xOutputSize, yOutputSize, dimensions[2], dimensions[3]]
 
         case .FullyConnected:
             return [1, 1, numChannels, 1]
@@ -196,6 +199,18 @@ class Layer : NSObject, NSCoding, MPSCNNConvolutionDataSource
 
        }
     }
+    
+    func setSizeDependentParameters(_ dimensions: [Int])
+    {
+        //  Set the input channels for layers that have a weight descriptor
+        inputChannels = dimensions[2] * dimensions[3]
+
+        //  Only have to set kernel size for fully-connected layers
+        if (type == .FullyConnected) {
+            kernelWidth = dimensions[0]
+            kernelHeight = dimensions[1]
+        }
+    }
 
     class func sizeGivenPadding(method : PaddingMethod, sourceSize : Int, kernelSize : Int, stride: Int, offset: Int, clip: Int) -> Int
     {
@@ -203,9 +218,9 @@ class Layer : NSObject, NSCoding, MPSCNNConvolutionDataSource
         case .ValidOnly:
             return (sourceSize - kernelSize) / stride + 1
         case .SizeSame:
-            return sourceSize
+            return (sourceSize - 1) / stride + 1
         case .SizeFull:
-            return sourceSize + (kernelSize - 1) / stride
+            return (sourceSize + kernelSize - 2) / stride + 1
         case .Custom:
             return (clip - offset) / stride
         }
@@ -532,6 +547,25 @@ class Layer : NSObject, NSCoding, MPSCNNConvolutionDataSource
         return additionalDataInfo
     }
     
+    
+    func getNumParameters(inputDimensions: [Int]) -> Int
+    {
+        switch (type) {
+        case .Convolution:
+            let numInputs = kernelWidth * kernelHeight * inputChannels
+            let numWeights = numInputs * numChannels
+            if (useBiasTerms) { return numWeights + numChannels}
+            return numWeights
+        case .FullyConnected:
+            let numInputs = inputDimensions.reduce(1, *)
+            let numWeights = numInputs * numChannels
+            if (useBiasTerms) { return numWeights + numChannels}
+            return numWeights
+        default:
+            return 0
+        }
+     }
+    
     func initializeAdditionalDataInfo()
     {
         switch (type) {
@@ -660,7 +694,7 @@ class Layer : NSObject, NSCoding, MPSCNNConvolutionDataSource
     func initializeWeights(inputDimensions: [Int])
     {
         //  Remember the input channels for the descriptor later
-        inputChannels = inputDimensions[2]
+        inputChannels = inputDimensions[2] * inputDimensions[3]
 
         //  Convolution layer
         if (type == .Convolution) {
@@ -1360,5 +1394,6 @@ class Layer : NSObject, NSCoding, MPSCNNConvolutionDataSource
         
         return weightsAndBiasState
     }
+
 }
 

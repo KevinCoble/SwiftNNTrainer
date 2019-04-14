@@ -192,6 +192,9 @@ class DataViewController: NSViewController
         //  Get the document
         guard let doc = view.window?.windowController?.document as? Document else { return }
         
+        //  Make sure the dimension changed
+        if (doc.docData.inputDimensions[dimensionIndex] == newDimension) { return }
+        
         //  Set the dimension
         doc.setInputDimension(index: dimensionIndex, newDimension: newDimension)
         
@@ -282,6 +285,9 @@ class DataViewController: NSViewController
         //  Get the document
         guard let doc = view.window?.windowController?.document as? Document else { return }
         
+        //  Make sure the dimension changed
+        if (doc.docData.outputDimensions[dimensionIndex] == newDimension) { return }
+
         //  Set the dimension
         doc.setOutputDimension(index: dimensionIndex, newDimension: newDimension)
         
@@ -894,7 +900,6 @@ class DataViewController: NSViewController
         
         //  Set the seperate output source checkbox
         seperateOutputSource.state = doc.docData.separateOutputSource ? .on : .off
-        onSeperateOutputSourceChanged(seperateOutputSource)
         
         //  Set the output source
         switch (doc.docData.trainingDataOutputSource) {
@@ -921,13 +926,11 @@ class DataViewController: NSViewController
         //  Set the seperate label file checkbox
         labelFile.state = doc.docData.separateLabelFile ? .on : .off
         labelFilePath.url = doc.docData.labelFileURL
-        onUseLabelFileChanged(labelFile)
 
         //  Set the seperate testing source checkbox
         separateTestingSource.state = doc.docData.separateTestingSource ? .on : .off
         testingInputDataPath.url = doc.docData.testingInputDataURL
         testingOutputDataPath.url = doc.docData.testingOutputDataURL
-        onUseSeparateTestingSourceChanged(separateTestingSource)
 
         //  Set the output type
         switch (doc.outputType) {

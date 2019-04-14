@@ -33,6 +33,9 @@ Standard 3D user controls are enabled on the view.  Using dragging, scrolling, p
 #### Show 1x1xN data as XxYx1 blocks
 This checkbox changes the 3D View from showing long-skinny 1x1xN boxes into more compact rectangular data.  For instance, a 1x1x10 result box would be drawn as a 5x2x1 box, making it fit on the image better.  While this makes the image more compact (especially for classification networks with many classes), it is a distortion of the actual data sizes, so is made optional.
 
+#### Out Block Scale
+This slider control changes the X-axis scale of the intermediate output data blocks that are drawn between layers to show the resulting size of each layer.  Some layers can have results that have an excessive X-axis size, such as when a fully-connected layer has 4096 channels of output.  The slider changes the scale of these blocks between 1% of normal size when at the left, to full size when at the right.
+
 ## Configuring a Layer
 The following settings can be made when creating a new layer, or when updating a layers' settings:
 
@@ -129,3 +132,6 @@ Possible settings for this are:
 After each change to the network topology or the layer settings, the validity of the network is determined.  A network is valid if  the size of the input dimensions fit the layer settings for the first layer, each layers output fits the settings of the next layer, and the resizing of data performed by the layers results in a final data output that matches the output dimensions given.  
 
 The result of the validity check is shown in the Network Validity field on the Network tab.
+
+## Number of parameters
+After each change to the network topology or the layer settings, the number of parameters used by the network is calculated and displayed in this field.  The number of parameters is the total number of weight and bias terms used by all layers.  It can give a rough estimate to the complexity, and hence the speed of training, of a network.

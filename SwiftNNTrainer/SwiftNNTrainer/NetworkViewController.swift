@@ -26,6 +26,7 @@ class NetworkViewController: NSViewController
     @IBOutlet weak var layersTable: NSTableView!
     @IBOutlet weak var network3DView: Network3DView!
     @IBOutlet weak var networkValidity: NSTextField!
+    @IBOutlet weak var numberParameters: NSTextField!
     @IBOutlet weak var layerType: NSPopUpButton!
     @IBOutlet weak var layerSubType: NSPopUpButton!
     @IBOutlet weak var channelsLabel: NSTextField!
@@ -91,6 +92,10 @@ class NetworkViewController: NSViewController
     func setControls()
     {
         //  Set the controls to the layer values
+        kernelWidth.integerValue = currentLayer.kernelWidth
+        kernelWidthStepper.integerValue = currentLayer.kernelWidth
+        kernelHeight.integerValue = currentLayer.kernelHeight
+        kernelHeightStepper.integerValue = currentLayer.kernelHeight
         layerType.selectItem(withTag: currentLayer.type.rawValue)
         onLayerTypeChange(layerType)
         layerSubType.selectItem(withTag: currentLayer.subType)
@@ -98,10 +103,6 @@ class NetworkViewController: NSViewController
         channels.integerValue = currentLayer.numChannels
         channelsStepper.integerValue = currentLayer.numChannels
         useBiasTerms.state = currentLayer.useBiasTerms ? .on : .off
-        kernelWidth.integerValue = currentLayer.kernelWidth
-        kernelWidthStepper.integerValue = currentLayer.kernelWidth
-        kernelHeight.integerValue = currentLayer.kernelHeight
-        kernelHeightStepper.integerValue = currentLayer.kernelHeight
         strideX.integerValue = currentLayer.strideX
         strideXStepper.integerValue = currentLayer.strideX
         strideY.integerValue = currentLayer.strideY
@@ -181,6 +182,17 @@ class NetworkViewController: NSViewController
         //  Get the document
         guard let doc = view.window?.windowController?.document as? Document else { return }
 
+        //  Update the 3D view
+        network3DScene.setFromDocument(document: doc.docData)
+    }
+    
+    @IBAction func onOutputBlockScaleChanged(_ sender: NSSlider) {
+        let newScale : CGFloat = CGFloat(sender.floatValue * 0.01)
+        network3DScene.outputBlockScale = newScale
+        
+        //  Get the document
+        guard let doc = view.window?.windowController?.document as? Document else { return }
+        
         //  Update the 3D view
         network3DScene.setFromDocument(document: doc.docData)
     }
@@ -566,6 +578,7 @@ class NetworkViewController: NSViewController
 
         //  Check the network validity (could have changed data dimensions)
         networkValidity.stringValue = doc.validateNetwork()
+        numberParameters.integerValue = doc.numParameters
         
         //  Reload the tables
         reloadTables(keepFlowSelection: true, keepLayerSelection: false)
@@ -593,7 +606,8 @@ class NetworkViewController: NSViewController
             
            //  Check the network validity (could have changed data dimensions)
             networkValidity.stringValue = doc.validateNetwork()
-            
+            numberParameters.integerValue = doc.numParameters
+
             //  Reload the tables
             reloadTables(keepFlowSelection: true, keepLayerSelection: true)
 
@@ -624,7 +638,8 @@ class NetworkViewController: NSViewController
 
             //  Check the network validity (could have changed data dimensions)
             networkValidity.stringValue = doc.validateNetwork()
-            
+            numberParameters.integerValue = doc.numParameters
+
             //  Reload the tables
             reloadTables(keepFlowSelection: true, keepLayerSelection: false)
 
@@ -652,7 +667,8 @@ class NetworkViewController: NSViewController
             
             //  Check the network validity (could have changed data dimensions)
             networkValidity.stringValue = doc.validateNetwork()
-            
+            numberParameters.integerValue = doc.numParameters
+
             //  Reload the tables
             reloadTables(keepFlowSelection: true, keepLayerSelection: false)
 
@@ -740,7 +756,8 @@ class NetworkViewController: NSViewController
         
         //  Check the network validity (could have changed data dimensions)
         networkValidity.stringValue = doc.validateNetwork()
-        
+        numberParameters.integerValue = doc.numParameters
+
         //  Update the loss type
         lossFunctionType.selectItem(withTag: Int(doc.docData.lossType.rawValue))
         

@@ -80,6 +80,8 @@ class DocumentData : NSObject, NSCoding
     var separateLabelFile : Bool
     var labelFileURL : URL?
     
+    var labels : [String]?
+    
     //  Test data creation
     var createTestDataFromTrainingData : Bool
     var testDataPercentage : Float
@@ -160,6 +162,32 @@ class DocumentData : NSObject, NSCoding
         updateFlowDimensions()
     }
     
+    func getLabelIndex(label: String) -> Int
+    {
+        //  Try to find it in existing labels
+        var labelIndex = -1
+        if let labels = labels {
+            for index in 0..<labels.count {
+                if(labels[index].caseInsensitiveCompare(label) == .orderedSame) {
+                    labelIndex = index
+                    break
+                }
+            }
+        }
+        
+        //  If not found, see if we should add the label
+        if (labelIndex < 0) {
+            if (!separateLabelFile) {
+                //  Add the label
+                if (labels == nil) { labels = [] }
+                labels!.append(label)
+                labelIndex = labels!.count - 1
+            }
+        }
+
+        return labelIndex
+    }
+    
     func updateFlowDimensions()
     {
         //  Clear the current dimensions
@@ -187,6 +215,13 @@ class DocumentData : NSObject, NSCoding
         }
     }
     
+    func setSizeDependentParameters()
+    {
+        for flow in flows {
+            flow.setSizeDependentParameters()
+        }
+    }
+
     func getFlowInputDimensions(flowIndex : Int) -> [Int]
     {
         if (flowIndex < 0 || flowIndex >= flows.count) { return [-1, -1, -1, -1] }
@@ -218,7 +253,7 @@ class DocumentData : NSObject, NSCoding
 
     required init?(coder aDecoder: NSCoder) {
         let version = aDecoder.decodeInteger(forKey: "fileVersion")
-        if (version > 1) { return nil }
+        if (version > 2) { return nil }
         
         inputDimensions = aDecoder.decodeObject(forKey: "inputDimensions") as! [Int]
         outputDimensions = aDecoder.decodeObject(forKey: "outputDimensions") as! [Int]
@@ -244,6 +279,10 @@ class DocumentData : NSObject, NSCoding
         separateLabelFile = aDecoder.decodeBool(forKey: "separateLabelFile")
         labelFileURL = aDecoder.decodeObject(forKey: "labelFileURL") as! URL?
         
+        if (version >= 2) {
+            labels = aDecoder.decodeObject(forKey: "labels") as! [String]?
+        }
+        
         createTestDataFromTrainingData = aDecoder.decodeBool(forKey: "createTestDataFromTrainingData")
         testDataPercentage = aDecoder.decodeFloat(forKey: "testDataPercentage")
         testDataSourceLocation = TestDataSourceLocation(rawValue: aDecoder.decodeInteger(forKey: "testDataSourceLocation"))!
@@ -267,10 +306,13 @@ class DocumentData : NSObject, NSCoding
         super.init()
         
         updateFlowDimensions()
+        if (!needsWeightInitialization) {
+            setSizeDependentParameters()
+        }
     }
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(1, forKey: "fileVersion")
+        aCoder.encode(2, forKey: "fileVersion")
         aCoder.encode(inputDimensions, forKey: "inputDimensions")
         aCoder.encode(outputDimensions, forKey: "outputDimensions")
         
@@ -294,6 +336,8 @@ class DocumentData : NSObject, NSCoding
 
         aCoder.encode(separateLabelFile, forKey: "separateLabelFile")
         aCoder.encode(labelFileURL, forKey: "labelFileURL")
+        
+        aCoder.encode(labels, forKey: "labels")
         
         aCoder.encode(createTestDataFromTrainingData, forKey: "createTestDataFromTrainingData")
         aCoder.encode(testDataPercentage, forKey: "testDataPercentage")
@@ -324,6 +368,7 @@ class Document: NSDocument {
     //  Document data
     var docData : DocumentData
     var validNetwork = false
+    var numParameters = 0
     
     //  Training data
     var trainingData : TrainingData?
@@ -485,6 +530,7 @@ class Document: NSDocument {
     func validateNetwork() -> String
     {
         validNetwork = false
+        numParameters = 0
         //  Check the input size compatibility for each flow
         let numFlows = docData.flows.count
         for flowIndex in 0..<numFlows {
@@ -528,6 +574,9 @@ class Document: NSDocument {
                     }
                 }
             }
+            
+            //  Add the number of parameters for the flow
+            numParameters += docData.flows[flowIndex].getNumParameters()
         }
         
         //  Check the output flow dimensions match the output dimensions

@@ -107,7 +107,7 @@ class Flow : NSObject, NSCoding
             else {
                 //  Get the flow output dimensions
                 if (input.index >= docData.flows.count) { return false }
-                let flowOutputDimensions = docData.flows[input.index].currentInputSize
+                let flowOutputDimensions = docData.flows[input.index].currentOutputSize
                 if (flowOutputDimensions[0] < 0) { return false }
                 
                 //  If this is the first input, set it
@@ -138,6 +138,27 @@ class Flow : NSObject, NSCoding
         currentOutputSize = dimensions
         
         return changed
+    }
+
+    func setSizeDependentParameters()
+    {
+        var dimensions = currentInputSize
+        for layer in layers {
+            layer.setSizeDependentParameters(dimensions)
+            dimensions = layer.getOutputDimensionGivenInput(dimensions: dimensions)
+        }
+    }
+    
+    func getNumParameters() -> Int
+    {
+        var numFlowParameters = 0
+        var dimensions = currentInputSize
+        for layer in layers {
+            numFlowParameters += layer.getNumParameters(inputDimensions: dimensions)
+            dimensions = layer.getOutputDimensionGivenInput(dimensions: dimensions)
+        }
+
+        return numFlowParameters
     }
     
     func getGraphOutputImage(inputImages : [MPSNNImageNode], flowOutputImages: [MPSNNImageNode?], docData : DocumentData) -> MPSNNImageNode?

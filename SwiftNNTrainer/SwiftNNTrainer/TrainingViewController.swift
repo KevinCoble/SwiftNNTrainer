@@ -415,6 +415,8 @@ class TrainingViewController: NSViewController
             return
         }
         
+//        print(graph.debugDescription)
+        
         //  Make sure the training data is loaded
         if (doc.trainingData == nil) {
             let alert = NSAlert()
@@ -577,7 +579,7 @@ class TrainingViewController: NSViewController
         }
 
         let elapsed = CACurrentMediaTime() - testingStartTime
-        print("elapsed training time = \(elapsed)")
+        print("elapsed testing time = \(elapsed)")
     }
 
     @IBAction func onTrain(_ sender: Any)

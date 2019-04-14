@@ -178,8 +178,6 @@ class DataChunk : NSObject, NSCoding {
     var repeatChunks : [DataChunk]?     //  If a repeating chunk, these are the chunks to repeat
     let postProcessing : PostReadProcessing
     
-    var labels : [String]?
-    
     var normalizationIndex : Int?
     
     init(type: DataChunkType, length: Int, format : DataFormatType, postProcessing : PostReadProcessing)
@@ -216,7 +214,7 @@ class DataChunk : NSObject, NSCoding {
         //  Get the data for the types that can use it
         var data : [Float]?
         if (type != .Repeat && type != .SetDimension) {
-            data = readBinaryData(inputFile : inputFile, postProcessing: postProcessing)
+            data = readBinaryData(inputFile : inputFile, postProcessing: postProcessing, docData: trainingData.docData!)
             if (data == nil) {
                 trainingData.docData?.loadError = "Error reading binary data"
                 return false
@@ -300,7 +298,7 @@ class DataChunk : NSObject, NSCoding {
         return true
     }
     
-    func readBinaryData(inputFile : InputStream, postProcessing : PostReadProcessing) -> [Float]?
+    func readBinaryData(inputFile : InputStream, postProcessing : PostReadProcessing, docData : DocumentData) -> [Float]?
     {
         //  Read the data bytes
         let dataByteLength = format.byteLength
@@ -399,12 +397,9 @@ class DataChunk : NSObject, NSCoding {
         case .fTextString:
             if let string = String(bytes: bytes, encoding: .utf8) {
                 //  Convert the string to an index based on the known labels
-                if let labels = labels {
-                    for index in 0..<labels.count {
-                        if(labels[index].caseInsensitiveCompare(string) == .orderedSame) {
-                            return [Float(index)]
-                        }
-                    }
+                let labelIndex = docData.getLabelIndex(label: string)
+                if (labelIndex >= 0) {
+                    return [Float(labelIndex)]
                 }
             }
             return nil
@@ -441,7 +436,7 @@ class DataChunk : NSObject, NSCoding {
                     trainingData.docData?.loadError = "Not enough components on line to match format"
                     return -1
                 }
-                if let value = getFloatData(component: components[index]) {
+                if let value = getFloatData(component: components[index], docData: trainingData.docData!) {
                     data![i] = value
                     numUsed += 1
                 }
@@ -510,17 +505,14 @@ class DataChunk : NSObject, NSCoding {
         return numUsed
     }
     
-    func getFloatData(component: String) -> Float?
+    func getFloatData(component: String, docData: DocumentData) -> Float?
     {
         switch (format) {
         case .fTextString:
             //  Convert the string to an index based on the known labels
-            if let labels = labels {
-                for index in 0..<labels.count {
-                    if(labels[index].caseInsensitiveCompare(component) == .orderedSame) {
-                        return Float(index)
-                    }
-                }
+            let labelIndex = docData.getLabelIndex(label: component)
+            if (labelIndex >= 0) {
+                return Float(labelIndex)
             }
         case .fTextInt, .fTextFloat:
             return Float(component)
