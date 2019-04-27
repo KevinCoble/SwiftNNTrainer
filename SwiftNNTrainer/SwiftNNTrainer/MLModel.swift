@@ -15,6 +15,24 @@ enum MLModelImportError: Error {
     case unsupportedModelType
     case layerInputNotFound
     case errorParsingModel
+
+    func getAlertString() -> String
+    {
+        switch (self) {
+        case .moreThanOneInput:
+            return "More than one input found in MLModel.  Only one input an be in imported model"
+        case .unsupportedInputFeatureType:
+            return "The input feature type of the imported MLModel is not supported"
+        case .unsupportedOutputFeatureType:
+            return "The output feature type of the imported MLModel is not supported"
+        case .unsupportedModelType:
+            return "The model type of the MLModel is not supported.  Only Network models (classifier or regressor) are allowed"
+        case .layerInputNotFound:
+            return "The input with the required identifier for on of the model layers could not be found"
+        case .errorParsingModel:
+            return "Unknown error parsing the model"
+        }
+    }
 }
 
 
@@ -24,6 +42,22 @@ enum MLModelExportError: Error {
     case unsupportedLayerType
     case paddingDifferentBetweenDimensions
     case unsupportedActivationType
+
+    func getAlertString() -> String
+    {
+        switch (self) {
+        case .errorCreatingModel:
+            return "Error createing the MLModel file from the objects"
+        case .errorWritingModel:
+            return "Error writing the specified MLModel file"
+        case .unsupportedLayerType:
+            return "The SwiftNNTrainer model contains one or more layers that are not supported for export"
+        case .paddingDifferentBetweenDimensions:
+            return "The SwiftNNTrainer model contains a layer with different padding directives for different dimensions"
+        case .unsupportedActivationType:
+            return "The SwiftNNTrainer model contains a Neuron layer with an unsupported activagtion type"
+        }
+    }
 }
 
 
@@ -257,21 +291,23 @@ extension Document
                 //  If that flow has multiple output references, start a new flow
                 if (outputReferencesForFlow[flowIndex] > 1) {
                     if let newFlowIndex = currentDataForFlow.firstIndex(of: "") {
-                        let newLayer = try Layer(layers[index])
-                        docData.flows[newFlowIndex].layers.append(newLayer)
-                        outputReferencesForFlow[newFlowIndex] = numOutputReferences[index]
-                        currentDataForFlow[newFlowIndex] = layers[index].output[0]
-                        docData.flows[newFlowIndex].inputs.append(InputSource(type: .Flow, index: flowIndex))
-                   }
+                        if let newLayer = try Layer(layers[index]) {
+                            docData.flows[newFlowIndex].layers.append(newLayer)
+                            outputReferencesForFlow[newFlowIndex] = numOutputReferences[index]
+                            currentDataForFlow[newFlowIndex] = layers[index].output[0]
+                            docData.flows[newFlowIndex].inputs.append(InputSource(type: .Flow, index: flowIndex))
+                        }
+                    }
                     else {
                         throw MLModelImportError.errorParsingModel
                     }
                 }
                 else {
-                    let newLayer = try Layer(layers[index])
-                    docData.flows[flowIndex].layers.append(newLayer)
-                    outputReferencesForFlow[flowIndex] = numOutputReferences[index]
-                    currentDataForFlow[flowIndex] = layers[index].output[0]
+                    if let newLayer = try Layer(layers[index]) {
+                        docData.flows[flowIndex].layers.append(newLayer)
+                        outputReferencesForFlow[flowIndex] = numOutputReferences[index]
+                        currentDataForFlow[flowIndex] = layers[index].output[0]
+                    }
                 }
             }
             else {
@@ -521,7 +557,7 @@ extension Flow
 extension Layer
 {
     //  Create a layer from a MLModel layer
-    convenience init(_ mlLayer : CoreML_Specification_NeuralNetworkLayer) throws
+    convenience init?(_ mlLayer : CoreML_Specification_NeuralNetworkLayer) throws
     {
         self.init()
         
@@ -543,8 +579,8 @@ extension Layer
             setFromSoftMax(softMaxParams)
         case .lrn(let lrnParams):
             setFromLRN(lrnParams)
-//!!        case .flatten(let flattenParams):
-//!!            setFromFlatten(flattenParams)
+        case .flatten:
+            return nil   //      No need for flatten layers
         default:
             throw MLLayerImportError.unsupportedLayerType
         }
@@ -687,11 +723,17 @@ extension Layer
             XPaddingMethod = .ValidOnly
             YPaddingMethod = .ValidOnly
             featurePaddingMethod = .ValidOnly
-        case .includeLastPixel:
-            //!!  probably set custom padding?
-            XPaddingMethod = .SizeSame
-            YPaddingMethod = .SizeSame
-            featurePaddingMethod = .SizeSame
+        case .includeLastPixel(let padding):
+            //   Fudged for googlenet import - this padding would have to be custom set based on input/kernel size
+            if (padding.paddingAmounts[0] > 0 || strideX > 1) {
+                YPaddingMethod = .SizeSame
+                XPaddingMethod = .SizeSame
+            }
+            else {
+                YPaddingMethod = .ValidOnly
+                XPaddingMethod = .ValidOnly
+            }
+            featurePaddingMethod = XPaddingMethod
         }
 
     }

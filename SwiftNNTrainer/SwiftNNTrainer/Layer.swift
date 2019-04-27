@@ -1280,7 +1280,8 @@ class Layer : NSObject, NSCoding, MPSCNNConvolutionDataSource
     func biasTerms() -> UnsafeMutablePointer<Float>?
     {
         if (biases == nil || !useBiasTerms) { return nil }
-        return UnsafeMutablePointer(mutating: biases!)
+        
+        return UnsafeMutableRawPointer(mutating: biases!).bindMemory(to: Float.self, capacity: biases!.count * MemoryLayout<Float>.stride)
     }
     
     func dataType() -> MPSDataType

@@ -41,14 +41,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
                     //  Get the document controller and add the document
                     NSDocumentController.shared.addDocument(document)
                 }
-                catch {
+                catch let error {
                     let alert = NSAlert()
                     alert.addButton(withTitle: "OK")
-                    alert.messageText = "Unable to read mlmodel file"
-                    alert.informativeText = "The mlmodel file could not be read, or could not be formed into an mlmodel class"
+                    alert.messageText = "Unable to import mlmodel file"
+                    if error is MLModelImportError {
+                        alert.informativeText = (error as! MLModelImportError).getAlertString()
+                    }
+                    else {
+                        alert.informativeText = "The mlmodel file could not be read, or could not be formed into an mlmodel class due to an unknown error"
+                    }
                     alert.alertStyle = .critical
                     alert.runModal()
                     return
+
                 }
             }
         }
@@ -72,11 +78,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
                 do {
                     try document.exportMLModel(url: savePanel.url!, imageInput: asImage)
                 }
-                catch {
+                catch let error {
                     let alert = NSAlert()
                     alert.addButton(withTitle: "OK")
                     alert.messageText = "Unable to export mlmodel file"
-                    alert.informativeText = "The mlmodel file could not be created, or could not be saved to the file specified"
+                    if (error is MLModelExportError) {
+                        alert.informativeText = (error as! MLModelExportError).getAlertString()
+                    }
+                    else {
+                        alert.informativeText = "The mlmodel file could not be created, or could not be saved to the file specified"
+                    }
                     alert.alertStyle = .critical
                     alert.runModal()
                     return
